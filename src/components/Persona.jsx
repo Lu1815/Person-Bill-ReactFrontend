@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 
 import { useAddPersonaMutation, useGetPersonasQuery, useRemovePersonaMutation } from '../services/appApi'
 import Form from './Form';
+import Loader from './Loader';
 import Table from './Table';
 
 const initialState = {nombre: '', apellidoPaterno: '', apellidoMaterno: '', identificacion: ''}
@@ -12,7 +13,7 @@ const Persona = () => {
   const [ addPersona ] = useAddPersonaMutation();
   const [ removePersona ] = useRemovePersonaMutation();
 
-  if(isFetching) return '...Loading';
+  if(isFetching) return <Loader />;
 
   const handleChangeAdd = (e) => {
     e.persist();
@@ -46,23 +47,26 @@ const Persona = () => {
 
   return (
     <>
-      <Form 
-        title='Añadir usuario' 
-        input1='Nombre' input2='Apellido Paterno' input3='Apellido Materno' input4='Identificación' 
-        handleChange={handleChangeAdd} 
-        onSave={addNewPersona}
-        nameInput1='nombre' nameInput2='apellidoPaterno' nameInput3='apellidoMaterno' nameInput4='identificacion'
-      />
-      <hr className='border-gray-300'/>
-      { (data.length > 0) ? 
-        <Table 
-          title='Personas / Usuarios' 
-          th1='Nombre' th2='Apellido Paterno' th3='Apellido Materno' th4='Identificación' 
-          data={data} 
-          onRemove={deletePersona} 
-          opcion='Eliminar'/>
-        : <p className="text-lg text-center font-bold m-5">Todavía no hay usuarios registrados.</p>
-      }
+      { data ? (
+        <>
+          <Form 
+            title='Añadir usuario' 
+            input1='Nombre' input2='Apellido Paterno' input3='Apellido Materno' input4='Identificación' 
+            handleChange={handleChangeAdd} 
+            onSave={addNewPersona}
+            nameInput1='nombre' nameInput2='apellidoPaterno' nameInput3='apellidoMaterno' nameInput4='identificacion'
+          />
+          <hr className='border-gray-300'/>
+          {(data.length > 0) ? 
+            <Table 
+              title='Personas / Usuarios' 
+              th1='Nombre' th2='Apellido Paterno' th3='Apellido Materno' th4='Identificación' 
+              data={data} 
+              onRemove={deletePersona} 
+              opcion='Eliminar'/>
+            : <p className="text-lg text-center font-bold m-5">Todavía no hay usuarios registrados.</p>}
+        </>
+      ) : <p className="text-lg text-center font-bold m-5">No hay conexión al backend.</p> }
     </>
   )
 }
