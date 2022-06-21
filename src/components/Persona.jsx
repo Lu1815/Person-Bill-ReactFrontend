@@ -26,9 +26,14 @@ const Persona = () => {
 
   const addNewPersona = async () => {
     if(inputData.nombre && inputData.apellidoPaterno && inputData.identificacion){
-      await addPersona(inputData);
-      setInputData(initialState);
-      refetch(); 
+      let idntfcacion = data.find(item => item.identificacion === inputData.identificacion)
+      if(!idntfcacion){
+        await addPersona(inputData);
+        setInputData(initialState);
+        refetch(); 
+      } else {
+        window.alert("Ya existe la identificación que trato de registrar, no pueden existir identificaciones duplicadas.")
+      }
     } else {
       window.alert("Se debe completar el campo nombre, apellido paterno e identificación.")
     }

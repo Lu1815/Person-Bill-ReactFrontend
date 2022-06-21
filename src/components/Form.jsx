@@ -28,7 +28,7 @@ const Form = ({ title, input1, input2, input3, input4, onSave, onCancel, handleC
             { input4 && (
                 <div className="mb-6">
                     <label className="block mb-2 font-bold" htmlFor="">{input4}</label>
-                    <input className="inline-block w-full p-2 leading-6 text-md font-extrabold placeholder-gray-400 bg-white shadow border-2 border-gray-800 rounded" type={inputType4 ? inputType4 : 'text'} placeholdername={nameInput4} placeholder={input4} onChange={handleChange}/>
+                    <input className="inline-block w-full p-2 leading-6 text-md font-extrabold placeholder-gray-400 bg-white shadow border-2 border-gray-800 rounded" type={inputType4 ? inputType4 : 'text'} name={nameInput4} placeholder={input4} onChange={handleChange}/>
                 </div>
             )}
             <button className="inline-block w-full mb-2 py-2 px-6 text-center text-lg leading-6 text-white font-extrabold bg-gray-800 hover:bg-gray-700 border-3 border-indigo-900 shadow rounded transition duration-200" onClick={() => onSave()}>Guardar</button>
